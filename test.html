@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE-edge" charset="utf-8" />
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="../timelineResource.js"></script>
+        <script type="text/javascript" src="../swta_google_timeline.js"></script>
+        <!-- for milestone from URL -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+        <script type="text/javascript" src="../milestone_url.js"></script>
+        <script type="text/javascript" src="../exceldata_url.js"></script>
+    </head>
+    <body>
+        <!-- Enter here [START] -->
+        <div id="milestone_fusa"></div>
+        <script type="text/javascript">
+        
+            var params = new params();
+            params.url = "https://github.com/naksdad/repo/blob/master/milestone.xlsx?raw=true";
+            params.sheets = [
+                {'name' : 'Sheet1'}
+            ];
+
+            $(document).ready(function() {
+                getMilestoneFromURL(params).then(function(ret) {
+                    var fusaTimeline = new timelineType();
+                    fusaTimeline.region = "milestone_fusa";
+                    fusaTimeline.column = [
+                        { type: 'string', id: 'Who?' },
+                        { type: 'string', id: 'What?' },
+                        { type: 'date', id: 'Start' },
+                        { type: 'date', id: 'End' }
+                    ];
+                    fusaTimeline.row = ret;
+                    googleTimelineMain(registerGoogleTimeline(fusaTimeline));
+                }).catch(function(err) {
+                    alert(err);
+                })
+            });
+        
+        </script>
+    </body>
+</html>
